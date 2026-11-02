@@ -296,6 +296,7 @@ a.poster:hover{transform:translateY(-2px);box-shadow:0 0 0 1px var(--ink),0 9px 
 .roll .nm{font-weight:600;white-space:nowrap;flex:none}
 .roll .af{font-family:var(--font-hand);font-style:italic;font-size:1.05rem;color:var(--rubric);white-space:nowrap;min-width:0;overflow:hidden;text-overflow:ellipsis;text-align:right}
 .wide .gloss{padding-top:1.25rem}
+.roll .ti,.roll .sep{color:var(--ink-soft)}
 .main .roll a{color:inherit;text-decoration:none;border-bottom:1px solid transparent;transition:color .15s ease,border-color .15s ease}
 .main .roll a:hover,.main .roll a:focus-visible{border-bottom-color:currentColor}
 .main .roll a.nm:hover,.main .roll a.nm:focus-visible{color:var(--rubric)}
@@ -383,6 +384,9 @@ a.poster:hover{transform:translateY(-2px);box-shadow:0 0 0 1px var(--ink),0 9px 
   .fields{grid-template-columns:minmax(0,1fr)}
   .app-title,.leaf-apply .app-title{font-size:2.6rem}
   .rolls{grid-template-columns:minmax(0,1fr)}
+  .roll li{gap:0 .55rem}
+  .roll .af{font-size:.8rem}
+  .roll .nm{font-size:1.02rem}
   .actions .btn{white-space:normal}
 }
 @media (max-width:480px){
@@ -390,6 +394,9 @@ a.poster:hover{transform:translateY(-2px);box-shadow:0 0 0 1px var(--ink),0 9px 
   .frontis-in{padding:.7rem .6rem .5rem}
 }
 @media (max-width:380px){
+  .roll .af{font-size:.76rem}
+  .roll .nm{font-size:.96rem}
+  .roll .sep{margin:0 -.1em}
   .brand span{font-size:1.25rem}
   .bar .btn{padding:.55em .8em .45em}
 }
@@ -587,12 +594,12 @@ a.poster:hover{transform:translateY(-2px);box-shadow:0 0 0 1px var(--ink),0 9px 
           <div>
             <h3>Mentors</h3>
             <ul class="roll">
-              <li><a class="nm" href="https://www.linkedin.com/in/adarsh-h-623941204/" target="_blank" rel="noopener" title="Adarsh Hiremath on LinkedIn">Adarsh Hiremath</a><span class="af"><a href="https://mercor.com" target="_blank" rel="noopener">Mercor</a></span></li>
-              <li><a class="nm" href="https://www.linkedin.com/in/alex-shan-446321202/" target="_blank" rel="noopener" title="Alex Shan on LinkedIn">Alex Shan</a><span class="af"><a href="https://judgmentlabs.ai" target="_blank" rel="noopener">Judgment Labs</a></span></li>
-              <li><a class="nm" href="https://www.linkedin.com/in/grace-li-721a4017b/" target="_blank" rel="noopener" title="Grace Li on LinkedIn">Grace Li</a><span class="af"><a href="https://intelligence.ai" target="_blank" rel="noopener">The Intelligence Company</a></span></li>
+              <li><a class="nm" href="https://www.linkedin.com/in/adarsh-h-623941204/" target="_blank" rel="noopener" title="Adarsh Hiremath on LinkedIn">Adarsh Hiremath</a><span class="af"><span class="ti">Co-founder &amp; Co-CEO</span><span class="sep"> · </span><a href="https://mercor.com" target="_blank" rel="noopener">Mercor</a></span></li>
+              <li><a class="nm" href="https://www.linkedin.com/in/alex-shan-446321202/" target="_blank" rel="noopener" title="Alex Shan on LinkedIn">Alex Shan</a><span class="af"><span class="ti">Co-founder &amp; CEO</span><span class="sep"> · </span><a href="https://judgmentlabs.ai" target="_blank" rel="noopener">Judgment Labs</a></span></li>
+              <li><a class="nm" href="https://www.linkedin.com/in/grace-li-721a4017b/" target="_blank" rel="noopener" title="Grace Li on LinkedIn">Grace Li</a><span class="af"><span class="ti">Co-founder &amp; CEO</span><span class="sep"> · </span><a href="https://intelligence.ai" target="_blank" rel="noopener">The Intelligence Company</a></span></li>
               <li><a class="nm" href="https://www.linkedin.com/in/mary-gao/" target="_blank" rel="noopener" title="Mary Gao on LinkedIn">Mary Gao</a><span class="af"><a href="https://cognition.ai" target="_blank" rel="noopener">Cognition</a></span></li>
-              <li><a class="nm" href="https://www.linkedin.com/in/vincentzhu9/" target="_blank" rel="noopener" title="Vincent Zhu on LinkedIn">Vincent Zhu</a><span class="af"><a href="https://cursor.com" target="_blank" rel="noopener">Cursor</a>/<a href="https://www.spacex.com" target="_blank" rel="noopener">SpaceX</a></span></li>
-              <li><a class="nm" href="https://www.linkedin.com/in/yash-s-patil/" target="_blank" rel="noopener" title="Yash Patil on LinkedIn">Yash Patil</a><span class="af"><a href="https://appliedcompute.com" target="_blank" rel="noopener">Applied Compute</a></span></li>
+              <li><a class="nm" href="https://www.linkedin.com/in/vincentzhu9/" target="_blank" rel="noopener" title="Vincent Zhu on LinkedIn">Vincent Zhu</a><span class="af"><span class="ti">Growth</span><span class="sep"> · </span><a href="https://cursor.com" target="_blank" rel="noopener">Cursor</a>/<a href="https://www.spacex.com" target="_blank" rel="noopener">SpaceX</a></span></li>
+              <li><a class="nm" href="https://www.linkedin.com/in/yash-s-patil/" target="_blank" rel="noopener" title="Yash Patil on LinkedIn">Yash Patil</a><span class="af"><span class="ti">Co-founder &amp; CEO</span><span class="sep"> · </span><a href="https://appliedcompute.com" target="_blank" rel="noopener">Applied Compute</a></span></li>
             </ul>
           </div>
         </div>
@@ -617,7 +624,7 @@ a.poster:hover{transform:translateY(-2px);box-shadow:0 0 0 1px var(--ink),0 9px 
 <script>
 (() => {
   // Google Apps Script web app URL (ends in /exec). See google-apps-script.js for setup.
-  const SHEET_ENDPOINT = "";
+  const SHEET_ENDPOINT = "https://script.google.com/macros/s/AKfycbw0kNXbve9biE7BUSemWzy-MruVg2t4ztGr1TfjMXFi0mEPzRWCC8yKXrqxm7CdhhSTtw/exec";
 
   /* ---- contents menu ---- */
   const nav = document.getElementById("tabula");
@@ -736,7 +743,8 @@ a.poster:hover{transform:translateY(-2px);box-shadow:0 0 0 1px var(--ink),0 9px 
     const data = values();
     if (data.website) { finish(data.name); return; }
     if (!SHEET_ENDPOINT.startsWith("https://")) {
-      setStatus("Applications aren't connected yet, so this wasn't sent. Your answers are saved in this browser.", true);
+      status.innerHTML = 'This preview can\'t send applications. Please apply at <a href="https://eos-fellowship.vercel.app/apply.html" target="_blank" rel="noopener">eos-fellowship.vercel.app/apply.html</a>.';
+      status.classList.add("bad");
       return;
     }
     submit.disabled = true;
