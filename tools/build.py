@@ -95,6 +95,7 @@ SUBS = {
     'hedgehog': data_uri('book_of_hours_france_paris_1420-1425_hedgehog_sm.webp'),
     'bird': data_uri('french_book_of_hours_14birdreader_sm.webp'),
     'divider': data_uri('luttrell_bird_dividerpng_sm.webp'),
+    'snailwoman': data_uri('heures_de_jacques_de_rambures_1460_snailwoman.webp'),
     'SUN_SIL': read(ASSETS, 'sun_sil.d'), 'SUN_INK': read(ASSETS, 'sun_ink.d'), 'WORD': read(ASSETS, 'word.d'),
     'SESSIONS': session_cards(),
 }

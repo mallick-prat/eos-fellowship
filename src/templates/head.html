@@ -91,6 +91,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .btn-ruled:hover{background:var(--rubric);color:var(--vellum-hi)}
 .btn .arr{font-family:var(--font-text);font-size:.9em}
 .bar .btn{font-size:1rem;padding:.6em 1em .5em}
+.bar .btn[aria-current="page"]{background:var(--rubric-deep);box-shadow:inset 0 0 0 1px var(--gold)}
 a:focus-visible,button:focus-visible{outline:2px solid var(--azure);outline-offset:3px}
 .bar a:focus-visible,.bar button:focus-visible{outline-color:var(--gold-hi)}
 
@@ -192,9 +193,10 @@ a.poster:hover{transform:translateY(-2px);box-shadow:0 0 0 1px var(--ink),0 9px 
 .s-act{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem 1rem;margin-top:.55rem}
 .s-act .btn{font-size:1rem;padding:.6em 1.05em .5em}
 .s-cal{font-family:var(--font-hand);font-style:italic;font-size:1rem;color:var(--rubric)}
-.main .session p{margin:0;text-align:left;hyphens:manual}
+.sec > .sessions{grid-column:1/-1}
+.session p{margin:0;text-align:left;hyphens:manual}
 .s-past{display:none;font-family:var(--font-hand);font-style:italic;color:var(--ink-soft)}
-.main .session .s-past{margin-top:.45rem}
+.session .s-past{margin-top:.45rem}
 .session.passed .poster{filter:grayscale(.85) sepia(.25);opacity:.7}
 .session.passed .s-act{display:none}
 .session.passed .s-past{display:block}
@@ -222,6 +224,11 @@ a.poster:hover{transform:translateY(-2px);box-shadow:0 0 0 1px var(--ink),0 9px 
 .leaf .app p{margin:0;text-align:left;hyphens:manual}
 .leaf .app .app-intro{margin:0 0 1.75rem}
 .leaf-apply .text{margin-top:0}
+.leaf-apply .apply-sec > .main{max-width:52rem;width:100%;justify-self:center}
+.leaf-apply .app-title,.leaf .app .app-lede,.leaf .app .app-intro{text-align:center}
+.leaf .app .app-lede{max-width:40rem;margin-inline:auto}
+.leaf-apply .apply-sec > .gloss{grid-auto-flow:column;justify-content:center;align-items:end;gap:2.5rem;padding-top:2.25rem}
+.leaf-apply .apply-sec .note{transform:none}
 .leaf-apply .app{margin-top:0;padding-top:0;border-top:0}
 .leaf-apply .app-title{font-size:4rem;margin-bottom:.9rem}
 .leaf .app .back{margin:0 0 1.5rem;font-family:var(--font-hand);font-style:italic;font-size:1.02rem}
@@ -422,10 +429,10 @@ a.poster:hover{transform:translateY(-2px);box-shadow:0 0 0 1px var(--ink),0 9px 
       <a href="%%B%%#sessions">Info Sessions</a>
       <a href="%%B%%#fellowship">The Fellowship</a>
       <a href="%%B%%#why">Why Join</a>
-      <a href="apply.html">Apply</a>
+      <a href="%%B%%#sessions" data-rsvp>RSVP</a>
       <a href="%%B%%#company">Organizers</a>
     </nav>
-    <a class="btn btn-rubric" id="bar-cta" href="%%B%%#sessions">RSVP</a>
+    <a class="btn btn-rubric" id="bar-cta" href="apply.html">Apply</a>
     <button class="toggle" type="button" aria-expanded="false" aria-controls="tabula" aria-label="Contents"><i></i><i></i><i></i></button>
   </div>
 </header>

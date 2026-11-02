@@ -16,9 +16,9 @@
   });
 
   // on the application page, Apply stays marked; elsewhere mark the section being read
-  if (document.getElementById("app-form")) nav.querySelector('a[href="apply.html"]')?.setAttribute("aria-current", "true");
+  if (document.getElementById("app-form")) document.getElementById("bar-cta").setAttribute("aria-current", "page");
   const links = [...nav.querySelectorAll("a")];
-  const byId = new Map(links.map(a => [a.hash.slice(1), a]));
+  const byId = new Map(links.filter(a => !a.hasAttribute("data-rsvp")).map(a => [a.hash.slice(1), a]));
   const spy = new IntersectionObserver(entries => {
     for (const en of entries) {
       if (!en.isIntersecting) continue;
@@ -37,11 +37,8 @@
       s.querySelector(".poster")?.setAttribute("tabindex", "-1");
     } else upcoming++;
   });
-  if (document.querySelector(".session") && !upcoming) {
-    const cta = document.getElementById("bar-cta");
-    cta.textContent = "Apply";
-    cta.href = "#application";
-  }
+  // once every session has passed, the menu no longer offers RSVP
+  if (document.querySelector(".session") && !upcoming) nav.querySelector("[data-rsvp]")?.remove();
 
   /* ---- the application ---- */
   const form = document.getElementById("app-form");
