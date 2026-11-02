@@ -120,7 +120,7 @@
     const data = values();
     if (data.website) { finish(data.name); return; }
     if (!SHEET_ENDPOINT.startsWith("https://")) {
-      status.innerHTML = 'This preview can\'t send applications. Please apply at <a href="https://eos-fellowship.vercel.app/apply.html" target="_blank" rel="noopener">eos-fellowship.vercel.app/apply.html</a>.';
+      status.innerHTML = 'This preview can\'t send applications. Please apply at <a href="https://eosfellows.com/apply.html" target="_blank" rel="noopener">eosfellows.com/apply.html</a>.';
       status.classList.add("bad");
       return;
     }

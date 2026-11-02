@@ -2,7 +2,7 @@
 
 The Eos Fellowship site, styled as an illuminated medieval manuscript.
 
-- Live: https://eos-fellowship.vercel.app (application page: `/apply.html`)
+- Live: https://eosfellows.com (application page: `/apply.html`). Also served at https://eos-fellowship.vercel.app.
 - Mirror: https://mallick-prat.github.io/eos-fellowship/
 - Applications go to the Google Sheet **Eos Fellowship Applications** (owned by mallickprat@gmail.com). Each applicant is emailed a copy.
 
