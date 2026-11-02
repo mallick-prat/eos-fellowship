@@ -1,0 +1,177 @@
+<script>
+(() => {
+  // Google Apps Script web app URL (ends in /exec). See google-apps-script.js for setup.
+  const SHEET_ENDPOINT = "%%SHEET_ENDPOINT%%";
+
+  /* ---- contents menu ---- */
+  const nav = document.getElementById("tabula");
+  const toggle = document.querySelector(".toggle");
+  const close = () => { nav.classList.remove("open"); toggle.setAttribute("aria-expanded", "false"); };
+  toggle.addEventListener("click", () => {
+    toggle.setAttribute("aria-expanded", String(nav.classList.toggle("open")));
+  });
+  nav.addEventListener("click", e => { if (e.target.closest("a")) close(); });
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape" && nav.classList.contains("open")) { close(); toggle.focus(); }
+  });
+
+  // on the application page, Apply stays marked; elsewhere mark the section being read
+  if (document.getElementById("app-form")) nav.querySelector('a[href="apply.html"]')?.setAttribute("aria-current", "true");
+  const links = [...nav.querySelectorAll("a")];
+  const byId = new Map(links.map(a => [a.hash.slice(1), a]));
+  const spy = new IntersectionObserver(entries => {
+    for (const en of entries) {
+      if (!en.isIntersecting) continue;
+      links.forEach(l => l.removeAttribute("aria-current"));
+      byId.get(en.target.id)?.setAttribute("aria-current", "true");
+    }
+  }, { rootMargin: "-40% 0px -55% 0px" });
+  byId.forEach((_, id) => { const el = document.getElementById(id); if (el) spy.observe(el); });
+
+  /* ---- sessions: grey out the ones that have passed ---- */
+  const now = Date.now();
+  let upcoming = 0;
+  document.querySelectorAll(".session").forEach(s => {
+    if (Date.parse(s.dataset.end) < now) {
+      s.classList.add("passed");
+      s.querySelector(".poster")?.setAttribute("tabindex", "-1");
+    } else upcoming++;
+  });
+  if (document.querySelector(".session") && !upcoming) {
+    const cta = document.getElementById("bar-cta");
+    cta.textContent = "Apply";
+    cta.href = "#application";
+  }
+
+  /* ---- the application ---- */
+  const form = document.getElementById("app-form");
+  if (form) {
+  const status = document.getElementById("app-status");
+  const submit = document.getElementById("app-submit");
+  const DRAFT = "eos-application-draft";
+  const words = s => (s.trim().match(/\S+/g) || []).length;
+
+  const store = {
+    get() { try { return JSON.parse(localStorage.getItem(DRAFT) || "null"); } catch { return null; } },
+    set(v) { try { localStorage.setItem(DRAFT, JSON.stringify(v)); } catch {} },
+    clear() { try { localStorage.removeItem(DRAFT); } catch {} },
+  };
+  const values = () => Object.fromEntries(new FormData(form));
+
+  const draft = store.get();
+  if (draft) {
+    for (const [k, v] of Object.entries(draft)) {
+      const el = form.elements[k];
+      if (!el || k === "website") continue;
+      if (el instanceof RadioNodeList) [...el].forEach(r => { r.checked = r.value === v; });
+      else el.value = v;
+    }
+  }
+
+  const counters = [...form.querySelectorAll("[data-max-words]")];
+  const updateCount = ta => {
+    const n = words(ta.value), max = +ta.dataset.maxWords;
+    const c = document.getElementById("c-" + ta.name);
+    c.textContent = n > max ? `${n} / ${max} words, ${n - max} over` : `${n} / ${max} words`;
+    c.classList.toggle("over", n > max);
+  };
+  counters.forEach(updateCount);
+
+  let saveTimer = 0;
+  form.addEventListener("input", e => {
+    if (e.target.matches("[data-max-words]")) updateCount(e.target);
+    if (e.target.name in rules && e.target.closest('[aria-invalid="true"]')) check(e.target.name);
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(() => store.set(values()), 400);
+  });
+
+  const rules = {
+    name: v => v.trim() ? "" : "Add your name.",
+    email: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()) ? "" : "Enter a valid email address.",
+    school: v => v.trim() ? "" : "Add your school.",
+    level: v => v ? "" : "Choose undergraduate or graduate.",
+    degree: v => v.trim() ? "" : "Add your degree.",
+    year: v => v ? "" : "Choose your year.",
+    phone: v => (v.match(/\d/g) || []).length >= 7 ? "" : "Add a phone number we can reach you at.",
+    linkedin: v => /linkedin\.com\/\S+/i.test(v) ? "" : "Paste the link to your LinkedIn profile.",
+    subject: v => !v.trim() ? "Answer this question." : words(v) > 100 ? `Keep this to 100 words. It's ${words(v)} now.` : "",
+    pick: v => !v.trim() ? "Answer this question." : words(v) > 100 ? `Keep this to 100 words. It's ${words(v)} now.` : "",
+    goals: v => !v.trim() ? "Answer this question." : words(v) > 100 ? `Keep this to 100 words. It's ${words(v)} now.` : "",
+  };
+  const check = name => {
+    const msg = rules[name](String(values()[name] ?? ""));
+    const target = name === "level" ? document.getElementById("f-level") : form.elements[name];
+    target.setAttribute("aria-invalid", msg ? "true" : "false");
+    document.getElementById("e-" + name).textContent = msg;
+    return !msg;
+  };
+
+  const setStatus = (msg, bad) => { status.textContent = msg; status.classList.toggle("bad", !!bad); };
+
+  form.addEventListener("submit", async e => {
+    e.preventDefault();
+    const bad = Object.keys(rules).filter(n => !check(n));
+    if (bad.length) {
+      setStatus(bad.length === 1 ? "One answer needs attention." : `${bad.length} answers need attention.`, true);
+      const first = bad[0] === "level" ? form.querySelector("[name=level]") : form.elements[bad[0]];
+      first.focus();
+      return;
+    }
+    const data = values();
+    if (data.website) { finish(data.name); return; }
+    if (!SHEET_ENDPOINT.startsWith("https://")) {
+      status.innerHTML = 'This preview can\'t send applications. Please apply at <a href="https://eos-fellowship.vercel.app/apply.html" target="_blank" rel="noopener">eos-fellowship.vercel.app/apply.html</a>.';
+      status.classList.add("bad");
+      return;
+    }
+    submit.disabled = true;
+    setStatus("Sending…");
+    const id = (crypto.randomUUID && crypto.randomUUID()) || String(Date.now()) + Math.random().toString(16).slice(2);
+    try {
+      await fetch(SHEET_ENDPOINT, {
+        method: "POST", mode: "no-cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify({ ...data, id }),
+      });
+      store.clear();
+      finish(data.name);
+    } catch {
+      setStatus("Your application didn't send. Check your connection and try again. Your answers are saved in this browser.", true);
+    } finally {
+      submit.disabled = false;
+    }
+  });
+
+  function finish(name) {
+    const first = String(name || "").trim().split(/\s+/)[0];
+    const email = String(form.elements.email.value || "").trim();
+    document.getElementById("app-done-msg").textContent =
+      `Thank you${first ? ", " + first : ""}. A copy of your application is on its way to ${email}. ` +
+      "We will review all applications and reach out in early 2027 if you are invited to interview.";
+    form.hidden = true;
+    const done = document.getElementById("app-done");
+    done.hidden = false;
+    done.focus();
+  }
+
+  }
+
+  /* ---- light catching the gold leaf: one sweep on load, then it follows the pointer ---- */
+  const glint = document.getElementById("glint");
+  const mini = document.querySelector(".miniature");
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches || !glint || !mini) return;
+  let x = -900, target = -900, raf = 0;
+  const step = () => {
+    x += (target - x) * 0.12;
+    glint.setAttribute("gradientTransform", `translate(${x.toFixed(1)} 0)`);
+    raf = Math.abs(target - x) > 1 ? requestAnimationFrame(step) : 0;
+  };
+  const go = t => { target = t; if (!raf) raf = requestAnimationFrame(step); };
+  setTimeout(() => { go(-700); setTimeout(() => go(900), 120); }, 700);
+  mini.parentElement.addEventListener("pointermove", e => {
+    const r = mini.getBoundingClientRect();
+    go(((e.clientX - r.left) / r.width - 0.5) * 1100);
+  });
+  mini.parentElement.addEventListener("pointerleave", () => go(900));
+})();
+</script>

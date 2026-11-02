@@ -1,0 +1,108 @@
+<main class="leaf leaf-apply" lang="en">
+  <div class="text">
+    <section class="sec" id="application" aria-labelledby="h-app">
+      <div class="main app">
+        <p class="back"><a href="index.html">← Back to the Eos Fellowship</a></p>
+        <h1 class="app-title" id="h-app"><span class="cap">T</span>he Application</h1>
+        <p class="app-lede">Apply by Dec 15. We will review all applications and reach out in early 2027 if you are invited to interview. First cohort will be selected by the end of Q1 2027.</p>
+        <p class="app-intro">Fields marked <span class="req">*</span> are required. Your progress saves automatically in this browser, so you can close the page and finish later. After you submit, we email you a copy.</p>
+
+          <form class="form" id="app-form" novalidate>
+            <div class="fields">
+              <div class="field">
+                <label for="f-name">Name <span class="req" aria-hidden="true">*</span></label>
+                <input type="text" id="f-name" name="name" autocomplete="name" required aria-describedby="e-name">
+                <p class="err" id="e-name"></p>
+              </div>
+              <div class="field">
+                <label for="f-email">Email <span class="req" aria-hidden="true">*</span></label>
+                <input type="email" id="f-email" name="email" autocomplete="email" required aria-describedby="e-email">
+                <p class="err" id="e-email"></p>
+              </div>
+              <div class="field">
+                <label for="f-school">School <span class="req" aria-hidden="true">*</span></label>
+                <input type="text" id="f-school" name="school" list="schools" autocomplete="organization" required aria-describedby="e-school">
+                <datalist id="schools"><option value="Columbia"></option><option value="Harvard"></option><option value="MIT"></option><option value="Penn"></option><option value="Princeton"></option><option value="Yale"></option></datalist>
+                <p class="err" id="e-school"></p>
+              </div>
+              <fieldset class="field" id="f-level" aria-describedby="e-level">
+                <legend>G/UG <span class="req" aria-hidden="true">*</span></legend>
+                <div class="choices">
+                  <label><input type="radio" name="level" value="Undergraduate" required> Undergraduate</label>
+                  <label><input type="radio" name="level" value="Graduate"> Graduate</label>
+                </div>
+                <p class="err" id="e-level"></p>
+              </fieldset>
+              <div class="field">
+                <label for="f-degree">Degree <span class="req" aria-hidden="true">*</span> <span class="hint">e.g. B.S. Computer Science</span></label>
+                <input type="text" id="f-degree" name="degree" required aria-describedby="e-degree">
+                <p class="err" id="e-degree"></p>
+              </div>
+              <div class="field">
+                <label for="f-year">Year <span class="req" aria-hidden="true">*</span> <span class="hint">expected graduation</span></label>
+                <select id="f-year" name="year" required aria-describedby="e-year">
+                  <option value="">Choose a year</option>
+                  <option>2026</option><option>2027</option><option>2028</option><option>2029</option><option>2030</option><option>2031</option><option>Other</option>
+                </select>
+                <p class="err" id="e-year"></p>
+              </div>
+              <div class="field">
+                <label for="f-phone">Phone # <span class="req" aria-hidden="true">*</span></label>
+                <input type="tel" id="f-phone" name="phone" autocomplete="tel" required aria-describedby="e-phone">
+                <p class="err" id="e-phone"></p>
+              </div>
+              <div class="field">
+                <label for="f-linkedin">LinkedIn <span class="req" aria-hidden="true">*</span></label>
+                <input type="text" id="f-linkedin" name="linkedin" inputmode="url" autocomplete="url" placeholder="linkedin.com/in/…" required aria-describedby="e-linkedin">
+                <p class="err" id="e-linkedin"></p>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="f-subject"><span class="q">What is a subject you know more about than anyone else? Why are you fascinated by it? What have you accomplished or built in this space?</span> <span class="req" aria-hidden="true">*</span> <span class="hint">(Max 100 words)</span></label>
+              <textarea id="f-subject" name="subject" rows="6" required data-max-words="100" aria-describedby="e-subject c-subject"></textarea>
+              <div class="meta"><p class="err" id="e-subject"></p><span class="count" id="c-subject" aria-live="polite">0 / 100 words</span></div>
+            </div>
+            <div class="field">
+              <label for="f-pick"><span class="q">If you could choose any company or person to join or invest in today what/who would it be? Why?</span> <span class="req" aria-hidden="true">*</span> <span class="hint">(Max 100 words)</span></label>
+              <textarea id="f-pick" name="pick" rows="6" required data-max-words="100" aria-describedby="e-pick c-pick"></textarea>
+              <div class="meta"><p class="err" id="e-pick"></p><span class="count" id="c-pick" aria-live="polite">0 / 100 words</span></div>
+            </div>
+            <div class="field">
+              <label for="f-goals"><span class="q">What are your goals for 3-5 years from now?</span> <span class="req" aria-hidden="true">*</span> <span class="hint">(Max 100 words)</span></label>
+              <textarea id="f-goals" name="goals" rows="6" required data-max-words="100" aria-describedby="e-goals c-goals"></textarea>
+              <div class="meta"><p class="err" id="e-goals"></p><span class="count" id="c-goals" aria-live="polite">0 / 100 words</span></div>
+            </div>
+            <div class="field">
+              <label for="f-peer"><span class="q">(Optional) Who is a peer you would be excited to see in the cohort?</span></label>
+              <input type="text" id="f-peer" name="peer">
+            </div>
+
+            <div class="hp" aria-hidden="true"><label for="f-website">Website</label><input type="text" id="f-website" name="website" tabindex="-1" autocomplete="off"></div>
+
+            <div class="submit-row">
+              <button class="btn btn-rubric" type="submit" id="app-submit">Submit application</button>
+              <p class="form-status" id="app-status" role="status"></p>
+            </div>
+            <p class="fine">Only the Eos organizers see your application. Your copy comes from mallickprat@gmail.com.</p>
+          </form>
+
+          <div class="done" id="app-done" hidden tabindex="-1">
+            <h4>Received.</h4>
+            <p id="app-done-msg">Thank you for applying. We will review all applications and reach out in early 2027 if you are invited to interview.</p>
+          </div>
+        </div>
+      </div>
+      <aside class="gloss">
+        <p class="note"><span class="manicule" aria-hidden="true">☞</span><span>Applications close<br>Tuesday, Dec 15</span></p>
+        <figure><img src="%%hedgehog%%" alt="A hedgehog carrying apples on its spines" width="128" height="100"><figcaption>Paris, Book of Hours, 1420–25</figcaption></figure>
+      </aside>
+    </section>
+  </div>
+
+  <footer class="colophon">
+    <img class="divider" src="%%divider%%" alt="" title="Luttrell Psalter, c. 1325–40">
+    <svg class="device" viewBox="120 200 1670 680" role="img" aria-label="Eos Fellows"><use href="#p-sun"/><use href="#p-word"/></svg>
+  </footer>
+</main>
+

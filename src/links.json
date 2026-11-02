@@ -1,0 +1,39 @@
+{
+ "people": {
+  "Adam Zhou": "https://www.linkedin.com/in/adamzhou17/",
+  "Andrea Wang": "https://www.linkedin.com/in/andreashuyuwang/",
+  "Angelina Lue": "https://www.linkedin.com/in/angelina-lue/",
+  "Joshua Browder": "https://www.linkedin.com/in/joshua-browder-b0b573116/",
+  "Prat Mallick": "https://www.linkedin.com/in/pratmallick/",
+  "Sean Cai": "https://www.linkedin.com/in/sean-z-cai/",
+  "Adarsh Hiremath": "https://www.linkedin.com/in/adarsh-h-623941204/",
+  "Alex Shan": "https://www.linkedin.com/in/alex-shan-446321202/",
+  "Grace Li": "https://www.linkedin.com/in/grace-li-721a4017b/",
+  "Mary Gao": "https://www.linkedin.com/in/mary-gao/",
+  "Vincent Zhu": "https://www.linkedin.com/in/vincentzhu9/",
+  "Yash Patil": "https://www.linkedin.com/in/yash-s-patil/"
+ },
+ "companies": {
+  "Redglass": "https://www.redglass.vc",
+  "SV Angel": "https://svangel.com",
+  "Meta": "https://www.meta.com",
+  "DoNotPay": "https://donotpay.com",
+  "Browder Capital": "https://www.browdercapital.com",
+  "Xfund": "https://www.xfund.com",
+  "a16z": "https://a16z.com",
+  "Mercor": "https://mercor.com",
+  "Judgment Labs": "https://judgmentlabs.ai",
+  "The Intelligence Company": "https://intelligence.ai",
+  "Cognition": "https://cognition.ai",
+  "Cursor": "https://cursor.com",
+  "SpaceX": "https://www.spacex.com",
+  "Applied Compute": "https://appliedcompute.com"
+ },
+ "titles": {
+  "Adarsh Hiremath": "Co-founder & Co-CEO",
+  "Alex Shan": "Co-founder & CEO",
+  "Grace Li": "Co-founder & CEO",
+  "Vincent Zhu": "Growth",
+  "Yash Patil": "Co-founder & CEO"
+ }
+}

@@ -1,0 +1,73 @@
+{
+ "base_url": "https://eos-fellowship.vercel.app",
+ "sheet_endpoint": "https://script.google.com/macros/s/AKfycbw0kNXbve9biE7BUSemWzy-MruVg2t4ztGr1TfjMXFi0mEPzRWCC8yKXrqxm7CdhhSTtw/exec",
+ "tagline": "Discover, Champion, and Accelerate your life’s work",
+ "sessions": [
+  {
+   "school": "Columbia",
+   "poster": "p_columbia.webp",
+   "partiful": "DbCU9ovJvOUqmQnZXi8P",
+   "day": "Fri, Nov 6",
+   "time": "6:00–7:30 PM",
+   "date": "2026-11-06",
+   "start": "1800",
+   "end": "1930",
+   "where": "Columbia @ the Heights"
+  },
+  {
+   "school": "Penn",
+   "poster": "p_penn.webp",
+   "partiful": "bHHQZOVr13N5Zdjc605Y",
+   "day": "Sat, Nov 7",
+   "time": "3:00 PM",
+   "date": "2026-11-07",
+   "start": "1500",
+   "end": "1630",
+   "where": ""
+  },
+  {
+   "school": "Princeton",
+   "poster": "p_princeton.webp",
+   "partiful": "2URcJnVxMrKBnU0V8vIo",
+   "day": "Sun, Nov 8",
+   "time": "1:00–2:30 PM",
+   "date": "2026-11-08",
+   "start": "1300",
+   "end": "1430",
+   "where": ""
+  },
+  {
+   "school": "Yale",
+   "poster": "p_yale.webp",
+   "partiful": "6ushvwIHKXSsvWi7WOTh",
+   "day": "Mon, Nov 9",
+   "time": "5:00–6:30 PM",
+   "date": "2026-11-09",
+   "start": "1700",
+   "end": "1830",
+   "where": ""
+  },
+  {
+   "school": "Harvard",
+   "poster": "p_harvard.webp",
+   "partiful": "qMFn5HhthRyZejl4oGNF",
+   "day": "Tue, Nov 10",
+   "time": "7:00–8:30 PM",
+   "date": "2026-11-10",
+   "start": "1900",
+   "end": "2030",
+   "where": ""
+  },
+  {
+   "school": "MIT",
+   "poster": "p_mit.webp",
+   "partiful": "To2T2HDVbqWSk6QLWq72",
+   "day": "Tue, Nov 10",
+   "time": "9:00 PM",
+   "date": "2026-11-10",
+   "start": "2100",
+   "end": "2230",
+   "where": ""
+  }
+ ]
+}
