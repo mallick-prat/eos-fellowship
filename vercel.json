@@ -4,6 +4,31 @@
       "source": "/princeton",
       "destination": "https://partiful.com/e/2URcJnVxMrKBnU0V8vIo",
       "permanent": false
+    },
+    {
+      "source": "/columbia",
+      "destination": "https://partiful.com/e/DbCU9ovJvOUqmQnZXi8P",
+      "permanent": false
+    },
+    {
+      "source": "/penn",
+      "destination": "https://partiful.com/e/bHHQZOVr13N5Zdjc605Y",
+      "permanent": false
+    },
+    {
+      "source": "/yale",
+      "destination": "https://partiful.com/e/6ushvwIHKXSsvWi7WOTh",
+      "permanent": false
+    },
+    {
+      "source": "/mit",
+      "destination": "https://partiful.com/e/To2T2HDVbqWSk6QLWq72",
+      "permanent": false
+    },
+    {
+      "source": "/harvard",
+      "destination": "https://partiful.com/e/qMFn5HhthRyZejl4oGNF",
+      "permanent": false
     }
   ]
 }
