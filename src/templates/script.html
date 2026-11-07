@@ -117,7 +117,7 @@
     const data = values();
     if (data.website) { finish(data.name); return; }
     if (!SHEET_ENDPOINT.startsWith("https://")) {
-      status.innerHTML = 'This preview can\'t send applications. Please apply at <a href="https://eosfellows.com/apply.html" target="_blank" rel="noopener">eosfellows.com/apply.html</a>.';
+      status.innerHTML = 'This preview can\'t send applications. Please apply at <a href="https://eosfellows.com/apply" target="_blank" rel="noopener">eosfellows.com/apply</a>.';
       status.classList.add("bad");
       return;
     }

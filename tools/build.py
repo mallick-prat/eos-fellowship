@@ -27,8 +27,8 @@ def data_uri(name):
         return 'data:%s;base64,%s' % (mime, base64.b64encode(f.read()).decode())
 
 
-def gcal(title, start, end, details, loc=''):
-    q = {'action': 'TEMPLATE', 'text': title, 'dates': start + '/' + end, 'ctz': 'America/New_York', 'details': details}
+def gcal(title, start, end, details, loc='', tz='America/New_York'):
+    q = {'action': 'TEMPLATE', 'text': title, 'dates': start + '/' + end, 'ctz': tz, 'details': details}
     if loc:
         q['location'] = loc
     return 'https://calendar.google.com/calendar/render?' + urllib.parse.urlencode(q)
@@ -39,11 +39,12 @@ def session_cards():
     for s in cfg['sessions']:
         rsvp = 'https://partiful.com/e/' + s['partiful']
         d = s['date'].replace('-', '')
+        # times are local to the campus; Eastern unless the session says otherwise (Nov is standard time)
+        tz, off = s.get('tz', 'America/New_York'), s.get('utc_offset', '-05:00')
         cal = gcal('Eos Fellowship info session at ' + s['school'], d + 'T' + s['start'] + '00', d + 'T' + s['end'] + '00',
-                   'RSVP: ' + rsvp, s['where'])
-        # all sessions are in Eastern time after the Nov 1 DST change
-        end_iso = '%sT%s:%s:00-05:00' % (s['date'], s['end'][:2], s['end'][2:])
-        start_iso = '%sT%s:%s-05:00' % (s['date'], s['start'][:2], s['start'][2:])
+                   'RSVP: ' + rsvp, s['where'], tz)
+        end_iso = '%sT%s:%s:00%s' % (s['date'], s['end'][:2], s['end'][2:], off)
+        start_iso = '%sT%s:%s%s' % (s['date'], s['start'][:2], s['start'][2:], off)
         school = s['school']
         cards.append(f'''          <li class="session" data-end="{end_iso}">
             <a class="poster" href="{esc(rsvp)}" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true"><img src="{data_uri(s['poster'])}" alt="" width="600" height="600"></a>
@@ -78,10 +79,9 @@ def link_roster(body):
     for name, title in links.get('titles', {}).items():
         body = body.replace(f'>{name}</a><span class="af">',
                             f'>{name}</a><span class="af"><span class="ti">{esc(title)}</span><span class="sep"> · </span>', 1)
-    # organizer names in the info-sessions paragraph
-    for name in ('Andrea Wang', 'Adam Zhou', 'Joshua Browder', 'Prat Mallick'):
-        url = links['people'].get(name)
-        if url:
+    # organizer names in the info-sessions paragraph, written as "Name (Company)"
+    for name, url in links['people'].items():
+        if name + ' (' in body:
             body = body.replace(name + ' (', f'<a href="{esc(url)}" target="_blank" rel="noopener" title="{esc(name)} on LinkedIn">{name}</a> (', 1)
     return body
 
@@ -114,6 +114,8 @@ def page(body, title, base, endpoint):
 def hosted(p, og_title, path):
     """Full document with icons, canonical URL and link-preview tags in <head>."""
     p = p.replace('<meta name="claude:viewport-fit-sides" content="cover">\n', '')
+    # clean URLs on the hosted site: /apply and ./ (Vercel's cleanUrls and GitHub Pages both serve these)
+    p = p.replace('href="apply.html"', 'href="apply"').replace('href="index.html', 'href="./')
     i = p.index('<svg class="defs"')
     head_part, body_part = p[:i], p[i:]
     base, desc = cfg['base_url'], cfg['tagline']
@@ -154,7 +156,7 @@ index_body, apply_body = read(TEMPLATES, 'index.body.html'), read(TEMPLATES, 'ap
 endpoint = cfg['sheet_endpoint']
 write('index.html', hosted(page(index_body, 'Eos Fellowship', '', endpoint), 'Eos Fellowship', ''))
 write('apply.html', hosted(page(apply_body, 'Eos Fellowship Application', 'index.html', endpoint),
-                           'Apply to the Eos Fellowship', 'apply.html'))
+                           'Apply to the Eos Fellowship', 'apply'))
 
 if '--preview' in sys.argv:
     # claude.ai artifact copy: the main page has no skeleton (the viewer adds one) and

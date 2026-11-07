@@ -1,5 +1,5 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}</style>
-<link rel="canonical" href="https://eosfellows.com/apply.html">
+<link rel="canonical" href="https://eosfellows.com/apply">
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
@@ -9,7 +9,7 @@
 <meta property="og:site_name" content="Eos Fellowship">
 <meta property="og:title" content="Apply to the Eos Fellowship">
 <meta property="og:description" content="Discover, Champion, and Accelerate your life’s work">
-<meta property="og:url" content="https://eosfellows.com/apply.html">
+<meta property="og:url" content="https://eosfellows.com/apply">
 <meta property="og:image" content="https://eosfellows.com/og.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -440,18 +440,18 @@ a.poster:hover{transform:translateY(-2px);box-shadow:0 0 0 1px var(--ink),0 9px 
 
 <header class="bar">
   <div class="bar-in">
-    <a class="brand" href="index.html#top" aria-label="Eos Fellowship, back to top">
+    <a class="brand" href="./#top" aria-label="Eos Fellowship, back to top">
       <svg viewBox="136 213 640 652" aria-hidden="true"><use href="#p-sil" fill="url(#gilt)"/><use href="#p-sil" class="glint" fill="url(#glint)"/><use href="#p-sun" class="sun-ink"/></svg>
       <span>Eos Fellowship</span>
     </a>
     <nav class="tabula" id="tabula" aria-label="Contents">
-      <a href="index.html#sessions">Info Sessions</a>
-      <a href="index.html#fellowship">The Fellowship</a>
-      <a href="index.html#why">Why Join</a>
-      <a href="index.html#sessions" data-rsvp>RSVP</a>
-      <a href="index.html#company">Organizers</a>
+      <a href="./#sessions">Info Sessions</a>
+      <a href="./#fellowship">The Fellowship</a>
+      <a href="./#why">Why Join</a>
+      <a href="./#sessions" data-rsvp>RSVP</a>
+      <a href="./#company">Organizers</a>
     </nav>
-    <a class="btn btn-rubric" id="bar-cta" href="apply.html">Apply</a>
+    <a class="btn btn-rubric" id="bar-cta" href="apply">Apply</a>
     <button class="toggle" type="button" aria-expanded="false" aria-controls="tabula" aria-label="Contents"><i></i><i></i><i></i></button>
   </div>
 </header>
@@ -460,7 +460,7 @@ a.poster:hover{transform:translateY(-2px);box-shadow:0 0 0 1px var(--ink),0 9px 
   <div class="text">
     <section class="sec wide apply-sec" id="application" aria-labelledby="h-app">
       <div class="main app">
-        <p class="back"><a href="index.html">← Back to the Eos Fellowship</a></p>
+        <p class="back"><a href="./">← Back to the Eos Fellowship</a></p>
         <h1 class="app-title" id="h-app"><span class="cap">T</span>he Application</h1>
         <p class="app-lede">Apply by Dec 15. We will review all applications and reach out in early 2027 if you are invited to interview. First cohort will be selected by the end of Q1 2027.</p>
         <p class="app-intro">Fields marked <span class="req">*</span> are required. Your progress saves automatically in this browser, so you can close the page and finish later. After you submit, we email you a copy.</p>
@@ -683,7 +683,7 @@ a.poster:hover{transform:translateY(-2px);box-shadow:0 0 0 1px var(--ink),0 9px 
     const data = values();
     if (data.website) { finish(data.name); return; }
     if (!SHEET_ENDPOINT.startsWith("https://")) {
-      status.innerHTML = 'This preview can\'t send applications. Please apply at <a href="https://eosfellows.com/apply.html" target="_blank" rel="noopener">eosfellows.com/apply.html</a>.';
+      status.innerHTML = 'This preview can\'t send applications. Please apply at <a href="https://eosfellows.com/apply" target="_blank" rel="noopener">eosfellows.com/apply</a>.';
       status.classList.add("bad");
       return;
     }
