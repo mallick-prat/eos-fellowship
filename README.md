@@ -13,7 +13,7 @@ The Eos Fellowship site, styled as an illuminated medieval manuscript.
 |---|---|
 | `index.html`, `apply.html`, `404.html` | The built pages. These are what get deployed. Don't edit them by hand; edit `src/` and rebuild. `404.html` is the "page is missing" page Vercel shows for any address that doesn't exist. |
 | `robots.txt`, `sitemap.xml` | For search engines. Also made by the build. |
-| `og.jpg`, `favicon*`, `icon-192.png`, `apple-touch-icon*.png` | Social preview card and icons, made by `tools/social.py`. |
+| `og.jpg`, `favicon*`, `icon-192.png`, `apple-touch-icon*.png` | Social preview card and icons, made by `tools/social.py`. The browser-tab icon (`favicon.*`) is the logo's sun in Eos blue; the home-screen icons are the gold sun miniature. |
 | `src/site.json` | Info sessions (school, Partiful ID, date and time), the Sheet endpoint, the site URL, and the preview tagline. |
 | `src/links.json` | LinkedIn URLs, company websites, and mentor titles. |
 | `src/templates/` | The page: `head.html` (styles, header), `index.body.html`, `apply.body.html`, `404.body.html`, `script.html` (menu, sessions, form, analytics events). |

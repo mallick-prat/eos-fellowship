@@ -132,9 +132,8 @@ def hosted(p, og_title, path, notfound=False):
     head_part, body_part = p[:i], p[i:]
     base, desc = cfg['base_url'], cfg['tagline']
     url = base + '/' + path
-    meta = (f'<meta name="robots" content="noindex">\n' if notfound else f'<link rel="canonical" href="{url}">\n') + f'''<link rel="icon" href="{r}favicon.ico" sizes="any">
-<link rel="icon" type="image/png" sizes="32x32" href="{r}favicon-32.png">
-<link rel="icon" type="image/png" sizes="192x192" href="{r}icon-192.png">
+    meta = (f'<meta name="robots" content="noindex">\n' if notfound else f'<link rel="canonical" href="{url}">\n') + f'''<link rel="icon" href="{r}favicon.ico" sizes="32x32">
+<link rel="icon" href="{r}favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="{r}apple-touch-icon.png">
 <meta name="theme-color" content="#121735">
 {ANALYTICS}<meta property="og:type" content="website">
