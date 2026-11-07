@@ -3,6 +3,23 @@
   // Google Apps Script web app URL (ends in /exec). See google-apps-script.js for setup.
   const SHEET_ENDPOINT = "%%SHEET_ENDPOINT%%";
 
+  /* ---- analytics: Vercel Web Analytics events (a no-op where its script isn't loaded) ---- */
+  const track = (name, data) => { try { window.va && window.va("event", data ? { name, data } : { name }); } catch {} };
+  const where = a => {
+    if (a.id === "bar-cta") return "header";
+    if (a.closest(".colophon")) return "footer";
+    const id = a.closest("section")?.id;
+    return id === "top" ? "hero" : id || "page";
+  };
+  document.addEventListener("click", e => {
+    const a = e.target.closest("a[href]");
+    if (!a) return;
+    const card = a.closest(".session");
+    if (card) track(a.matches(".s-cal") ? "Add to calendar" : "RSVP", { campus: card.dataset.campus });
+    else if (/(^|\/)apply(\.html)?$/.test(a.getAttribute("href"))) track("Apply click", { from: where(a) });
+  });
+  if (document.querySelector(".leaf-missing")) track("Page not found", { path: location.pathname.slice(0, 200) });
+
   /* ---- contents menu ---- */
   const nav = document.getElementById("tabula");
   const toggle = document.querySelector(".toggle");
@@ -74,8 +91,9 @@
   };
   counters.forEach(updateCount);
 
-  let saveTimer = 0;
+  let saveTimer = 0, started = !!draft;
   form.addEventListener("input", e => {
+    if (!started) { started = true; track("Application started"); }
     if (e.target.matches("[data-max-words]")) updateCount(e.target);
     if (e.target.name in rules && e.target.closest('[aria-invalid="true"]')) check(e.target.name);
     clearTimeout(saveTimer);
@@ -131,6 +149,8 @@
         body: JSON.stringify({ ...data, id }),
       });
       store.clear();
+      // no names or contact details in analytics: school, level and year only
+      track("Application submitted", { school: String(data.school || "").trim().slice(0, 80), level: data.level || "", year: data.year || "" });
       finish(data.name);
     } catch {
       setStatus("Your application didn't send. Check your connection and try again. Your answers are saved in this browser.", true);

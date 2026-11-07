@@ -5,6 +5,7 @@
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta name="theme-color" content="#121735">
+<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};if(location.protocol==="https:"&&!/(^|\.)github\.io$/.test(location.hostname)){var s=document.createElement("script");s.defer=true;s.src="/_vercel/insights/script.js";document.head.appendChild(s)}</script>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Eos Fellowship">
 <meta property="og:title" content="Apply to the Eos Fellowship">
@@ -250,6 +251,8 @@ a.poster:hover{transform:translateY(-2px);box-shadow:0 0 0 1px var(--ink),0 9px 
 .leaf-apply .submit-row{flex-direction:column;align-items:center;gap:.6rem}
 .leaf-apply .app .form-status{text-align:center}
 .leaf-apply .app .fine{text-align:center}
+.leaf-missing .missing-actions{justify-content:center;margin-top:1.75rem}
+.leaf.leaf-missing .app .missing-home{margin:1.75rem auto 0;text-align:center}
 .leaf-apply .app{margin-top:0;padding-top:0;border-top:0}
 .leaf-apply .app-title{font-size:4rem;margin-bottom:.9rem}
 .leaf .app .back{margin:0 0 1.5rem;font-family:var(--font-hand);font-style:italic;font-size:1.02rem}
@@ -570,6 +573,23 @@ a.poster:hover{transform:translateY(-2px);box-shadow:0 0 0 1px var(--ink),0 9px 
   // Google Apps Script web app URL (ends in /exec). See google-apps-script.js for setup.
   const SHEET_ENDPOINT = "https://script.google.com/macros/s/AKfycbw0kNXbve9biE7BUSemWzy-MruVg2t4ztGr1TfjMXFi0mEPzRWCC8yKXrqxm7CdhhSTtw/exec";
 
+  /* ---- analytics: Vercel Web Analytics events (a no-op where its script isn't loaded) ---- */
+  const track = (name, data) => { try { window.va && window.va("event", data ? { name, data } : { name }); } catch {} };
+  const where = a => {
+    if (a.id === "bar-cta") return "header";
+    if (a.closest(".colophon")) return "footer";
+    const id = a.closest("section")?.id;
+    return id === "top" ? "hero" : id || "page";
+  };
+  document.addEventListener("click", e => {
+    const a = e.target.closest("a[href]");
+    if (!a) return;
+    const card = a.closest(".session");
+    if (card) track(a.matches(".s-cal") ? "Add to calendar" : "RSVP", { campus: card.dataset.campus });
+    else if (/(^|\/)apply(\.html)?$/.test(a.getAttribute("href"))) track("Apply click", { from: where(a) });
+  });
+  if (document.querySelector(".leaf-missing")) track("Page not found", { path: location.pathname.slice(0, 200) });
+
   /* ---- contents menu ---- */
   const nav = document.getElementById("tabula");
   const toggle = document.querySelector(".toggle");
@@ -641,8 +661,9 @@ a.poster:hover{transform:translateY(-2px);box-shadow:0 0 0 1px var(--ink),0 9px 
   };
   counters.forEach(updateCount);
 
-  let saveTimer = 0;
+  let saveTimer = 0, started = !!draft;
   form.addEventListener("input", e => {
+    if (!started) { started = true; track("Application started"); }
     if (e.target.matches("[data-max-words]")) updateCount(e.target);
     if (e.target.name in rules && e.target.closest('[aria-invalid="true"]')) check(e.target.name);
     clearTimeout(saveTimer);
@@ -698,6 +719,8 @@ a.poster:hover{transform:translateY(-2px);box-shadow:0 0 0 1px var(--ink),0 9px 
         body: JSON.stringify({ ...data, id }),
       });
       store.clear();
+      // no names or contact details in analytics: school, level and year only
+      track("Application submitted", { school: String(data.school || "").trim().slice(0, 80), level: data.level || "", year: data.year || "" });
       finish(data.name);
     } catch {
       setStatus("Your application didn't send. Check your connection and try again. Your answers are saved in this browser.", true);

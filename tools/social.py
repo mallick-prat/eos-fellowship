@@ -1,6 +1,6 @@
 """Render the social card (og.jpg) and the tab/home-screen icons from the gold sun miniature.
 
-    python3 tools/social.py            # writes og.jpg, favicon.ico, favicon-32.png, icon-192.png, apple-touch-icon.png
+    python3 tools/social.py            # writes og.jpg, favicon.ico, favicon-32.png, icon-192.png, apple-touch-icon.png, apple-touch-icon-precomposed.png
     python3 tools/social.py --out DIR  # write somewhere else instead of the repo root
 
 Needs Google Chrome (headless screenshots) and ImageMagick (`magick`) on the PATH or at
@@ -68,6 +68,7 @@ o = lambda n: os.path.join(OUT, n)
 subprocess.run([MAGICK, card_png, '-strip', '-quality', '88', '-sampling-factor', '4:2:0', o('og.jpg')], check=True)
 subprocess.run([MAGICK, icon_png, '-resize', '192x192', o('icon-192.png')], check=True)
 subprocess.run([MAGICK, icon_png, '-resize', '180x180', o('apple-touch-icon.png')], check=True)
+shutil.copyfile(o('apple-touch-icon.png'), o('apple-touch-icon-precomposed.png'))  # older iOS asks for this name
 subprocess.run([MAGICK, icon_png, '-resize', '32x32', o('favicon-32.png')], check=True)
 subprocess.run([MAGICK, icon_png, '-define', 'icon:auto-resize=48,32,16', o('favicon.ico')], check=True)
 shutil.rmtree(tmp, ignore_errors=True)

@@ -46,7 +46,7 @@ def session_cards():
         end_iso = '%sT%s:%s:00%s' % (s['date'], s['end'][:2], s['end'][2:], off)
         start_iso = '%sT%s:%s%s' % (s['date'], s['start'][:2], s['start'][2:], off)
         school = s['school']
-        cards.append(f'''          <li class="session" data-end="{end_iso}">
+        cards.append(f'''          <li class="session" data-end="{end_iso}" data-campus="{esc(school)}">
             <a class="poster" href="{esc(rsvp)}" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true"><img src="{data_uri(s['poster'])}" alt="" width="600" height="600"></a>
             <h3 class="s-school">{school}</h3>
             <p class="s-when"><time datetime="{start_iso}">{s['day']}</time> · <span class="nw">{s['time']}</span></p>
@@ -111,22 +111,33 @@ def page(body, title, base, endpoint):
     return p
 
 
-def hosted(p, og_title, path):
-    """Full document with icons, canonical URL and link-preview tags in <head>."""
+# Vercel Web Analytics (page views + the custom events in script.html). Loaded only on
+# the Vercel-hosted site: the GitHub Pages mirror has no /_vercel/ routes.
+ANALYTICS = ('<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};'
+             'if(location.protocol==="https:"&&!/(^|\\.)github\\.io$/.test(location.hostname)){'
+             'var s=document.createElement("script");s.defer=true;s.src="/_vercel/insights/script.js";'
+             'document.head.appendChild(s)}</script>\n')
+
+
+def hosted(p, og_title, path, notfound=False):
+    """Full document with icons, canonical URL and link-preview tags in <head>.
+
+    notfound: the 404 page, which Vercel serves at whatever path was missing, so its
+    links start at the site root and it has no canonical URL and isn't indexed."""
     p = p.replace('<meta name="claude:viewport-fit-sides" content="cover">\n', '')
+    r = '/' if notfound else ''
     # clean URLs on the hosted site: /apply and ./ (Vercel's cleanUrls and GitHub Pages both serve these)
-    p = p.replace('href="apply.html"', 'href="apply"').replace('href="index.html', 'href="./')
+    p = p.replace('href="apply.html"', f'href="{r}apply"').replace('href="index.html', 'href="./')
     i = p.index('<svg class="defs"')
     head_part, body_part = p[:i], p[i:]
     base, desc = cfg['base_url'], cfg['tagline']
     url = base + '/' + path
-    meta = f'''<link rel="canonical" href="{url}">
-<link rel="icon" href="favicon.ico" sizes="any">
-<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
-<link rel="apple-touch-icon" href="apple-touch-icon.png">
+    meta = (f'<meta name="robots" content="noindex">\n' if notfound else f'<link rel="canonical" href="{url}">\n') + f'''<link rel="icon" href="{r}favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="{r}favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="{r}icon-192.png">
+<link rel="apple-touch-icon" href="{r}apple-touch-icon.png">
 <meta name="theme-color" content="#121735">
-<meta property="og:type" content="website">
+{ANALYTICS}<meta property="og:type" content="website">
 <meta property="og:site_name" content="Eos Fellowship">
 <meta property="og:title" content="{esc(og_title)}">
 <meta property="og:description" content="{esc(desc)}">
@@ -157,6 +168,14 @@ endpoint = cfg['sheet_endpoint']
 write('index.html', hosted(page(index_body, 'Eos Fellowship', '', endpoint), 'Eos Fellowship', ''))
 write('apply.html', hosted(page(apply_body, 'Eos Fellowship Application', 'index.html', endpoint),
                            'Apply to the Eos Fellowship', 'apply'))
+# Vercel serves 404.html for any address that doesn't exist (a typo, a cut-off link)
+write('404.html', hosted(page(read(TEMPLATES, '404.body.html'), 'Page not found · Eos Fellowship', '/', endpoint),
+                         'Eos Fellowship', '', notfound=True))
+write('robots.txt', f"User-agent: *\nAllow: /\n\nSitemap: {cfg['base_url']}/sitemap.xml\n")
+write('sitemap.xml', '<?xml version="1.0" encoding="UTF-8"?>\n'
+      '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+      + ''.join(f'  <url><loc>{cfg["base_url"]}/{p}</loc></url>\n' for p in ('', 'apply'))
+      + '</urlset>\n')
 
 if '--preview' in sys.argv:
     # claude.ai artifact copy: the main page has no skeleton (the viewer adds one) and
