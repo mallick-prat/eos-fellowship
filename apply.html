@@ -241,17 +241,19 @@ a.poster:hover{transform:translateY(-2px);box-shadow:0 0 0 1px var(--ink),0 9px 
 /* ---------- the application ---------- */
 .app{margin-top:2.25rem;padding-top:1.75rem;border-top:3px double var(--rule)}
 .leaf .app p{margin:0;text-align:left;hyphens:manual}
-.leaf .app .app-intro{margin:0 0 1.75rem}
+.leaf .app .app-intro{max-width:39rem;margin:0 auto 1.75rem}
 .leaf-apply .text{margin-top:0}
 .leaf-apply .apply-sec > .main{max-width:52rem;width:100%;justify-self:center}
 .leaf-apply .app-title,.leaf .app .app-lede,.leaf .app .app-intro{text-align:center}
-.leaf .app .app-lede{max-width:40rem;margin-inline:auto}
 .leaf-apply .apply-sec > .gloss{grid-auto-flow:column;justify-content:center;align-items:end;gap:2.5rem;padding-top:2.25rem}
 .leaf-apply .apply-sec .note{transform:none}
+.leaf-apply .submit-row{flex-direction:column;align-items:center;gap:.6rem}
+.leaf-apply .app .form-status{text-align:center}
+.leaf-apply .app .fine{text-align:center}
 .leaf-apply .app{margin-top:0;padding-top:0;border-top:0}
 .leaf-apply .app-title{font-size:4rem;margin-bottom:.9rem}
 .leaf .app .back{margin:0 0 1.5rem;font-family:var(--font-hand);font-style:italic;font-size:1.02rem}
-.leaf .app .app-lede{margin:0 0 .9rem;font-size:1.2rem;line-height:1.5}
+.leaf .app .app-lede{max-width:40rem;margin:0 auto .9rem;font-size:1.2rem;line-height:1.5}
 .app-title{margin:0 0 .3rem;font-family:var(--font-display);font-weight:400;font-size:2.6rem;line-height:1;color:var(--ink)}
 .app-title .cap{color:var(--rubric)}
 .app-intro{font-family:var(--font-hand);font-style:italic;font-size:1.05rem;color:var(--ink-soft);margin:0 0 1.5rem}
@@ -549,7 +551,6 @@ a.poster:hover{transform:translateY(-2px);box-shadow:0 0 0 1px var(--ink),0 9px 
             <h4>Received.</h4>
             <p id="app-done-msg">Thank you for applying. We will review all applications and reach out in early 2027 if you are invited to interview.</p>
           </div>
-        </div>
       </div>
       <aside class="gloss">
         <p class="note"><span class="manicule" aria-hidden="true">☞</span><span>Applications close<br>Tuesday, Dec 15</span></p>
