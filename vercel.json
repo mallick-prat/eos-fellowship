@@ -29,6 +29,16 @@
       "source": "/harvard",
       "destination": "https://partiful.com/e/qMFn5HhthRyZejl4oGNF",
       "permanent": false
+    },
+    {
+      "source": "/berkeley",
+      "destination": "https://partiful.com/e/30QG3htvaUAWomNesMvt",
+      "permanent": false
+    },
+    {
+      "source": "/stanford",
+      "destination": "https://partiful.com/e/EDtm1sbS9jSuMhKj4HTl",
+      "permanent": false
     }
   ]
 }
